@@ -20,6 +20,6 @@ class FoodTruck
   def potential_revenue
     @inventory.sum do |item|
       item[0].price * item[1]
-    end
+    end.round(2)
   end
 end
