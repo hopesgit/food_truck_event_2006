@@ -2,7 +2,7 @@ require "./lib/event"
 require "minitest/autorun"
 require "minitest/pride"
 
-class EventTest
+class EventTest < Minitest::Test
   def test_it_is_an_event
     event = Event.new("South Pearl Street Farmers Market")
 
@@ -12,7 +12,48 @@ class EventTest
   def test_it_has_attributes
     event = Event.new("South Pearl Street Farmers Market")
 
-    assert_equal "South pearl Street Farmers Market", event.name
+    assert_equal "South Pearl Street Farmers Market", event.name
     assert_equal [], event.food_trucks
-  end 
+  end
+
+  def test_it_can_hold_food_trucks
+    event = Event.new("South Pearl Street Farmers Market")
+    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+    food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
+    food_truck3 = FoodTruck.new("Palisade Peach Shack")
+
+    assert_equal [], event.food_trucks
+
+    event.add_food_truck(food_truck1)
+    event.add_food_truck(food_truck2)
+    event.add_food_truck(food_truck3)
+
+    assert_equal [food_truck1, food_truck2, food_truck3], event.food_trucks
+  end
+
+  def test_it_can_find_all_food_truck_names
+    event = Event.new("South Pearl Street Farmers Market")
+    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+    food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
+    food_truck3 = FoodTruck.new("Palisade Peach Shack")
+
+    assert_equal [], event.food_truck_names
+
+    event.add_food_truck(food_truck1)
+    event.add_food_truck(food_truck2)
+    event.add_food_truck(food_truck3)
+
+    assert_equal ["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"], event.food_truck_names
+  end
+
+  def test_placeholder
+    event = Event.new("South Pearl Street Farmers Market")
+    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+    item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
+    item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
+    item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
+    item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
+    food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
+    food_truck3 = FoodTruck.new("Palisade Peach Shack")
+  end
 end
